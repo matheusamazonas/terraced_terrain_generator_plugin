@@ -57,12 +57,14 @@ public class TerracedTerrainExample : MonoBehaviour
         var deformerSettings = new DeformationSettings(seed, _height, _frequency, _heightCurve);
         var generator = new TerrainGenerator(_sides, _radius, deformerSettings, _depth, _terraceCount);
         
-        Debug.Log("Generation terrain...");
+        Debug.Log("Generating terrain...");
+        var startTime = Time.realtimeSinceStartup;
         if (_async)
             await GenerateAsync(generator);
         else
             GenerateSynchronously(generator);
-        Debug.Log("Generated terrain.");
+        var endTime = Time.realtimeSinceStartup;
+        Debug.Log($"Generated terrain in {(endTime - startTime) * 1_000} milliseconds.");
         
         void GenerateSynchronously(TerrainGenerator terrainGenerator)
         {
